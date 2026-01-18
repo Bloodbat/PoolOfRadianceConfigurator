@@ -8,3 +8,7 @@
 /lib/*.o
 /lib/*.or
 /*.lps
+/lib/*.TPU
+/lib/i386-go32v2
+/lib/i386-win32
+/lib/i8086-msdos

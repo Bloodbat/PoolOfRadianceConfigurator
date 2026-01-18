@@ -15,6 +15,8 @@
 (* You should have received a copy of the GNU General Public License along
    with Pool of Radiance Config. If not, see <http://www.gnu.org/licenses/>.  *)
 
+unit ProgMain;
+
 {$IFDEF MSDOS}
 {$DEFINE DOSPROGRAM}
 {$ENDIF}
@@ -22,12 +24,6 @@
 {$IFDEF GO32V2}
 {$DEFINE DOSPROGRAM}
 {$ENDIF}
-
-{$IFDEF FPC}
-{$mode fpc}
-{$ENDIF}
-
-unit ProgMain;
 
 interface
 

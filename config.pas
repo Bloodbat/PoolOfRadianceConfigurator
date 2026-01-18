@@ -17,10 +17,6 @@
 
 program Config;
 
-{$IFDEF FPC}
-{$mode fpc}
-{$ENDIF}
-
 uses
   {$IFDEF FPC}
   {$IFDEF GO32V2}

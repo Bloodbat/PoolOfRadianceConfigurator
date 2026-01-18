@@ -17,10 +17,6 @@
 
 unit DosUtil;
 
-{$IFDEF FPC}
-{$mode fpc}
-{$ENDIF}
-
 interface
 
 uses

@@ -37,10 +37,6 @@ Just drop config.exe into your Pool of Radiance directory and run it.
   defaults for your machine and selects them. The defaults set by the
   program can be easily edited.
 
-- If you forgot to add a path separator: "\" to the paths you set in
-  the "Data Directory" and "Saved Game Directory" boxes, make sure to add
-  it!
-
 - The program will write the config file when the "Write and Exit"
   button is clicked, or the Alt-W keys are pressed.
 

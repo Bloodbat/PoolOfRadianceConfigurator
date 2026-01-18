@@ -248,6 +248,8 @@ const
     'F'
     );
 
+  cBackSlash = '\';
+
   sErrorEmptyDataDir = 'Data directory cannot be empty!';
   sErrorEmptySavedDir = 'Saved game directory cannot be empty!';
   sErrorInvalidDataDir = 'Invalid data directory!'#13#10'Invalid character: %c'#13#10'Invalid position: %d';
@@ -266,6 +268,12 @@ begin
 
   DataDir := MainWindow^.txtDataDir^.Data^;
   SavedGameDir := MainWindow^.txtSavedDir^.Data^;
+
+  if DataDir[Length(DataDir)] <> cBackSlash then
+    DataDir := DataDir + cBackSlash;
+
+  if SavedGameDir[Length(SavedGameDir)] <> cBackSlash then
+    SavedGameDir := SavedGameDir + cBackSlash;
 
   if DataDir = '' then
   begin
@@ -310,8 +318,6 @@ begin
   SelectedOption := MainWindow^.radgrpSound^.Value;
   OptionChar := ArraySoundModes[SelectedOption];
   WriteLn(ConfigFile, OptionChar);
-
-  { #todo : Affix the path separator if it's missing to paths! }
 
   WriteLn(ConfigFile, DataDir);
   WriteLn(ConfigFile, SavedGameDir);

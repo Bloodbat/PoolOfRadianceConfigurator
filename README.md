@@ -22,8 +22,6 @@ Just drop config.exe into your Pool of Radiance directory and run it.
 
 - If no configuration file exists, the program tries to detect good defaults for your machine and selects them. The defaults set by the program can be easily edited.
 
-- If you forgot to add a path separator: "\\" to the paths you set in the "Data Directory" and "Saved Game Directory" boxes, make sure to add it!
-
 - The program will write the config file when the "Write and Exit" button is clicked, or the Alt-W keys are pressed.
 
 - The program will exit without saving changes when the "Abort and Quit" button is clicked, or the Alt-Q or ESC keys are pressed.

@@ -52,7 +52,7 @@ uses
 
 const
   sPoolConfigFile = 'POOL.CFG';
-  sProgramVersion = 'V.1.0';
+  sProgramVersion = 'V.1.1';
 
   iVideoCga = 0;
   iVideoEga = 1;

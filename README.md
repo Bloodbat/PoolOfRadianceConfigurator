@@ -1,5 +1,7 @@
 # Pool of Radiance Configurator
 
+## Version 1.1
+
 A configuration editor for the DOS version of Pool of Radiance.
 
 Almost every game in the Gold Box series can be reconfigured by deleting the main configuration file or using a dedicated program; this is not so for the first game: Pool of Radiance, it has to either be reinstalled (not that easy considering the CD-ROM or online releases don't include floppy images to actually install the game from scratch and do a proper configuration) or the simple text file must be edited by hand (easy; but a bit opaque what the letters do and what they control).

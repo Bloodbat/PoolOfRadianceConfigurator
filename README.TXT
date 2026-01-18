@@ -1,5 +1,7 @@
                      Pool of Radiance Configurator
 
+                              Version 1.1
+
 A configuration editor for the DOS version of Pool of Radiance.
 
 Almost every game in the Gold Box series can be reconfigured by deleting

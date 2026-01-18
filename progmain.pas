@@ -248,8 +248,10 @@ const
     'F'
     );
 
-  sInvalidDataDir = 'Invalid data directory!'#13#10'Invalid character: %c'#13#10'Invalid position: %d';
-  sInvalidSaveDir = 'Invalid saved game directory!'#13#10'Invalid character: %c'#13#10'Invalid position: %d';
+  sErrorEmptyDataDir = 'Data directory cannot be empty!';
+  sErrorEmptySavedDir = 'Saved game directory cannot be empty!';
+  sErrorInvalidDataDir = 'Invalid data directory!'#13#10'Invalid character: %c'#13#10'Invalid position: %d';
+  sErrorInvalidSaveDir = 'Invalid saved game directory!'#13#10'Invalid character: %c'#13#10'Invalid position: %d';
 var
   ConfigFile: Text;
   SelectedOption: integer;
@@ -259,6 +261,20 @@ var
 begin
   SaveConfigFile := True;
 
+  if MainWindow^.txtDataDir^.Data^ = '' then
+  begin
+    MessageBox(sErrorEmptyDataDir, nil, mfError or mfOKButton);
+    SaveConfigFile := False;
+    Exit;
+  end;
+
+  if MainWindow^.txtSavedDir^.Data^ = '' then
+  begin
+    MessageBox(sErrorEmptySavedDir, nil, mfError or mfOKButton);
+    SaveConfigFile := False;
+    Exit;
+  end;
+
   {$IFDEF FPC}
   InvalidInfo := Default(TInvalidInfo);
   {$ENDIF}
@@ -266,7 +282,7 @@ begin
   if not IsDirNameValid(MainWindow^.txtDataDir^.Data^, InvalidInfo.Position,
     InvalidInfo.Character) then
   begin
-    MessageBox(sInvalidDataDir, @InvalidInfo, mfError or mfOKButton);
+    MessageBox(sErrorInvalidDataDir, @InvalidInfo, mfError or mfOKButton);
     SaveConfigFile := False;
     Exit;
   end;
@@ -274,7 +290,7 @@ begin
   if not IsDirNameValid(MainWindow^.txtSavedDir^.Data^, InvalidInfo.Position,
     InvalidInfo.Character) then
   begin
-    MessageBox(sInvalidSaveDir, @InvalidInfo, mfError or mfOKButton);
+    MessageBox(sErrorInvalidSaveDir, @InvalidInfo, mfError or mfOKButton);
     SaveConfigFile := False;
     Exit;
   end;

@@ -64,6 +64,8 @@ const
 
   iFullIntroCheckbox = 0;
 
+  cPathSeparator = '\';
+
 var
   MainWindow: PMainWindow;
 
@@ -248,8 +250,6 @@ const
     'F'
     );
 
-  cBackSlash = '\';
-
   sErrorEmptyDataDir = 'Data directory cannot be empty!';
   sErrorEmptySavedDir = 'Saved game directory cannot be empty!';
   sErrorInvalidDataDir = 'Invalid data directory!'#13#10'Invalid character: %c'#13#10'Invalid position: %d';
@@ -269,11 +269,11 @@ begin
   DataDir := MainWindow^.txtDataDir^.Data^;
   SavedGameDir := MainWindow^.txtSavedDir^.Data^;
 
-  if DataDir[Length(DataDir)] <> cBackSlash then
-    DataDir := DataDir + cBackSlash;
+  if DataDir[Length(DataDir)] <> cPathSeparator then
+    DataDir := DataDir + cPathSeparator;
 
-  if SavedGameDir[Length(SavedGameDir)] <> cBackSlash then
-    SavedGameDir := SavedGameDir + cBackSlash;
+  if SavedGameDir[Length(SavedGameDir)] <> cPathSeparator then
+    SavedGameDir := SavedGameDir + cPathSeparator;
 
   if DataDir = '' then
   begin
@@ -332,7 +332,6 @@ end;
 procedure TPoolRadConfig.SetDefaults;
 const
   sSuffixSavePath = 'SAVE\';
-  cPathSeparator = '\';
 
   iCurrentDrive = 0;
 var

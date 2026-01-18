@@ -1,0 +1,88 @@
+#                      Pool of Radiance Config
+
+# Copyright 2026 Bloodbat / La Serpiente y la Rosa Producciones
+
+# Pool of Radiance Config is free software: you can redistribute it and/or
+# modify it under the terms of the GNU General Public License as published
+# by the Free Software Foundation, either version 3 of the License, or (at
+# your option) any later version.
+
+# Pool of Radiance Config is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General
+# Public License for more details.
+
+# You should have received a copy of the GNU General Public License along
+# with Pool of Radiance Config. If not, see <http://www.gnu.org/licenses/>.
+
+# Makefile for Pool of Radiance Config for Free Pascal real mode cross-
+# compiling.
+
+# REQUIRES Free Pascal MS-DOS crosscompiler.
+# REQUIRES GNU Make: this makefile WON'T work with Borland Make.
+
+# Binary target
+#   bin/config.exe : builds the program, this is the default
+#                    target.
+
+# Other targets:
+#   clean          : deletes the compiled units from the LIB
+#                    folder.
+
+#   cleanall       : implies clean; deletes the generated binary
+#                    as well.
+
+# No debug information is possible for Free Pascal real mode targets
+# at the time this file was written.
+
+.SUFFIXES: .ppu .pas .exe
+
+PATHBIN = bin
+PATHLIB = lib
+
+DOSPATHS = 1
+BINARYNAME = config.exe
+
+#Set environment variable EXTRAFLAGS with any options you'd like to add
+
+PFLAGS = -FE$(PATHBIN) -FU$(PATHLIB) -Fu$(PATHLIB) -FcCP437 -Tmsdos -Pi8086 -Cp8086 -Mfpc -Sgi -CX -O3 -Xs -XX -vewnhibq -WmLarge
+COMPILEROPTS = -CPPACKENUM=1 -Si -Rintel
+
+BINDIR = $(addsuffix /, $(PATHBIN))
+LIBDIR = $(addsuffix /, $(PATHLIB))
+
+fixpaths = $(subst /,/,$1)
+ifdef DOSPATHS
+fixpaths = $(subst /,\,$1)
+EXEEXTENSION = .exe
+endif
+
+PC = fpc$(EXEEXTENSION)
+
+$(LIBDIR)%.ppu : %.pas
+	$(PC) $(PFLAGS) $(EXTRAFLAGS) $<
+
+UNITEXTENSION = ppu
+
+PFLAGS += $(COMPILEROPTS)
+
+$(BINDIR)$(BINARYNAME): config.pas $(LIBDIR)progmain.$(UNITEXTENSION) | $(PATHBIN)
+	$(PC) $(PFLAGS) $(EXTRAFLAGS) -o$(BINARYNAME) config.pas
+	$(copydata)
+
+$(LIBDIR)progmain.ppu: $(LIBDIR)mainwnd.ppu $(LIBDIR)dosutil.ppu | $(PATHLIB)
+
+$(PATHBIN):
+	-mkdir bin
+
+$(PATHLIB):
+	-mkdir lib
+
+.PHONY: clean
+clean:
+	-rm $(LIBDIR)*.ppu
+	-rm $(LIBDIR)*.a
+
+.PHONY: cleanall
+cleanall: clean
+	-rm $(BINDIR)$(BINARYNAME)

@@ -1,0 +1,9 @@
+/bin/*.CFG
+/bin/*.cfg
+/bin/*.exe
+/bin/config*
+/lib/*.a
+/lib/*.compiled
+/lib/*.ppu
+/lib/*.o
+/lib/*.or

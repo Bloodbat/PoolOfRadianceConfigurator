@@ -258,17 +258,23 @@ var
   OptionChar: char;
 
   InvalidInfo: TInvalidInfo;
+
+  DataDir: string;
+  SavedGameDir: string;
 begin
   SaveConfigFile := True;
 
-  if MainWindow^.txtDataDir^.Data^ = '' then
+  DataDir := MainWindow^.txtDataDir^.Data^;
+  SavedGameDir := MainWindow^.txtSavedDir^.Data^;
+
+  if DataDir = '' then
   begin
     MessageBox(sErrorEmptyDataDir, nil, mfError or mfOKButton);
     SaveConfigFile := False;
     Exit;
   end;
 
-  if MainWindow^.txtSavedDir^.Data^ = '' then
+  if SavedGameDir = '' then
   begin
     MessageBox(sErrorEmptySavedDir, nil, mfError or mfOKButton);
     SaveConfigFile := False;
@@ -279,15 +285,14 @@ begin
   InvalidInfo := Default(TInvalidInfo);
   {$ENDIF}
 
-  if not IsDirNameValid(MainWindow^.txtDataDir^.Data^, InvalidInfo.Position,
-    InvalidInfo.Character) then
+  if not IsDirNameValid(DataDir, InvalidInfo.Position, InvalidInfo.Character) then
   begin
     MessageBox(sErrorInvalidDataDir, @InvalidInfo, mfError or mfOKButton);
     SaveConfigFile := False;
     Exit;
   end;
 
-  if not IsDirNameValid(MainWindow^.txtSavedDir^.Data^, InvalidInfo.Position,
+  if not IsDirNameValid(SavedGameDir, InvalidInfo.Position,
     InvalidInfo.Character) then
   begin
     MessageBox(sErrorInvalidSaveDir, @InvalidInfo, mfError or mfOKButton);
@@ -308,8 +313,8 @@ begin
 
   { #todo : Affix the path separator if it's missing to paths! }
 
-  WriteLn(ConfigFile, MainWindow^.txtDataDir^.Data^);
-  WriteLn(ConfigFile, MainWindow^.txtSavedDir^.Data^);
+  WriteLn(ConfigFile, DataDir);
+  WriteLn(ConfigFile, SavedGameDir);
 
   SelectedOption := MainWindow^.chkbxsFullIntro^.Value;
   OptionChar := ArrayIntroTypes[SelectedOption];

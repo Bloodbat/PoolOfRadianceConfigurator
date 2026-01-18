@@ -57,3 +57,5 @@ As you can see, there are options aplenty.
   - Linux shell scripts for cross-compiling will be added later.
  
   - Take a look in the make files for some additional options such as using the Turbo Pascal command line compiler instead of the Borland Pascal one.
+ 
+ - A Lazarus project is also included, it contains convenient build modes for compiling DOS targets (real and protected mode); editing the sources, and debugging the non-DOS exclusive parts of the program easily under Windows or Linux.

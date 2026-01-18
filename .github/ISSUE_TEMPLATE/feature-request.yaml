@@ -1,0 +1,24 @@
+name: Pool of Radiance Configurator feature request
+description: Suggestion for Pool of Radiance Configurator.
+title: "[REQUEST] <title>"
+labels: ["feature request"]
+
+body:
+  - type: textarea
+    attributes:
+      label: Proposed change or addition
+      description: Describe clearly and concisely what you want the program to do or the behavior improvements you would like to see.
+      placeholder: I want the program to make the gods intervene!
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    attributes:
+      label: Anything else?
+      description: |
+        Links? References? Anything that will give us more context about your feature request!
+
+        Tip: You can attach images by clicking this area to highlight it and then dragging files to it.
+    validations:
+      required: false

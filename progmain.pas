@@ -41,14 +41,14 @@ type
     procedure InitMenuBar; virtual;
     procedure InitStatusLine; virtual;
     procedure ParseConfigFile;
-    procedure SaveConfigFile;
+    function SaveConfigFile: boolean;
     procedure SetDefaults;
   end;
 
 implementation
 
 uses
-  Objects, Views, MainWnd, Dos {$IFDEF DOSPROGRAM}, DosUtil{$ENDIF};
+  Objects, Views, MainWnd, Dos, MsgBox {$IFDEF DOSPROGRAM}, DosUtil{$ENDIF};
 
 const
   sPoolConfigFile = 'POOL.CFG';
@@ -104,8 +104,8 @@ begin
         case Event.Command of
           cmSave:
           begin
-            SaveConfigFile;
-            Message(@Self, evCommand, cmQuit, @Self);
+            if SaveConfigFile then
+              Message(@Self, evCommand, cmQuit, @Self);
           end;
         end;
     end;
@@ -226,7 +226,12 @@ begin
   Close(ConfigFile);
 end;
 
-procedure TPoolRadConfig.SaveConfigFile;
+function TPoolRadConfig.SaveConfigFile: boolean;
+type
+  TInvalidInfo = record
+    Character: longint;
+    Position: longint;
+  end;
 const
   ArrayVideoModes: array[iVideoCga..iVideoTandy] of char = (
     'C',
@@ -242,11 +247,38 @@ const
     'N',
     'F'
     );
+
+  sInvalidDataDir = 'Invalid data directory!'#13#10'Invalid character: %c'#13#10'Invalid position: %d';
+  sInvalidSaveDir = 'Invalid saved game directory!'#13#10'Invalid character: %c'#13#10'Invalid position: %d';
 var
   ConfigFile: Text;
   SelectedOption: integer;
   OptionChar: char;
+
+  InvalidInfo: TInvalidInfo;
 begin
+  SaveConfigFile := True;
+
+  {$IFDEF FPC}
+  InvalidInfo := Default(TInvalidInfo);
+  {$ENDIF}
+
+  if not IsDirNameValid(MainWindow^.txtDataDir^.Data^, InvalidInfo.Position,
+    InvalidInfo.Character) then
+  begin
+    MessageBox(sInvalidDataDir, @InvalidInfo, mfError or mfOKButton);
+    SaveConfigFile := False;
+    Exit;
+  end;
+
+  if not IsDirNameValid(MainWindow^.txtSavedDir^.Data^, InvalidInfo.Position,
+    InvalidInfo.Character) then
+  begin
+    MessageBox(sInvalidSaveDir, @InvalidInfo, mfError or mfOKButton);
+    SaveConfigFile := False;
+    Exit;
+  end;
+
   Assign(ConfigFile, sPoolConfigFile);
   Rewrite(ConfigFile);
 
@@ -258,8 +290,7 @@ begin
   OptionChar := ArraySoundModes[SelectedOption];
   WriteLn(ConfigFile, OptionChar);
 
-  { #todo : Add validators for and affix the path separator if it's
-    missing to paths! }
+  { #todo : Affix the path separator if it's missing to paths! }
 
   WriteLn(ConfigFile, MainWindow^.txtDataDir^.Data^);
   WriteLn(ConfigFile, MainWindow^.txtSavedDir^.Data^);

@@ -27,6 +27,8 @@ type
     vcVgaColor, vcMcgaMono, vcMcgaColor, vcTandy);
 
 function DetectVideoCard: TVideoCards;
+function IsDirNameValid(const DirName: string; var InvalidPosition: longint;
+  var InvalidChar: longint): boolean;
 
 implementation
 
@@ -89,6 +91,41 @@ begin
         else
           DetectVideoCard := vcCga;
       end;
+    end;
+  end;
+end;
+
+function IsDirNameValid(const DirName: string; var InvalidPosition: longint;
+  var InvalidChar: longint): boolean;
+type
+  TCharacters = set of char;
+const
+  InvalidCharacters: TCharacters =
+    [#0, ' ', '"', '*', '+', ',', '/', ';', '<', '=', '>', '?', '[',
+    ']', '|', #128..#255];
+  cColon = ':';
+var
+  CurrentChar: char;
+  i: integer;
+begin
+  IsDirNameValid := True;
+  for i := 1 to Length(DirName) do
+  begin
+    CurrentChar := DirName[i];
+    if (i > 2) and (CurrentChar = cColon) then
+    begin
+      InvalidPosition := i;
+      InvalidChar := Ord(cColon);
+      IsDirNameValid := False;
+      Break;
+    end;
+
+    if CurrentChar in InvalidCharacters then
+    begin
+      InvalidPosition := i;
+      InvalidChar := Ord(CurrentChar);
+      IsDirNameValid := False;
+      Break;
     end;
   end;
 end;

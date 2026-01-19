@@ -58,7 +58,7 @@ BINARYNAME = config.exe
 
 #Set environment variable EXTRAFLAGS with any options you'd like to add
 
-PFLAGS = -FE$(PATHBIN) -FU$(PATHLIB) -Fu$(PATHLIB) -FcCP437 -Cp80386 -Mfpc -Sgi
+PFLAGS = -FE$(PATHBIN) -FU$(PATHLIB) -Fu$(PATHLIB) -FcCP437 -Cp80386 -Mfpc -Sgi -Tgo32v2 -Pi386
 COMPILEROPTS = -CPPACKENUM=1 -Si -Rintel
 
 BINDIR = $(addsuffix /, $(PATHBIN))

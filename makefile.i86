@@ -90,4 +90,4 @@ cleanall: clean
 .PHONY: makezip
 makezip: $(BINDIR)$(BINARYNAME)
 	cp README.TXT bin
-	cd bin && zip -9 -X poolcfg.zip config.exe README.TXT && rm README.TXT
+	cd $(PATHBIN) && zip -9 -X poolcfg.zip $(BINARYNAME) README.TXT && rm README.TXT

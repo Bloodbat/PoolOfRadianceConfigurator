@@ -144,8 +144,6 @@ var
   OptionChar: char;
   OptionString: string;
 begin
-  { This could be read using BlockRead and a record; but, funnily enough,
-    the original game does it like this, so... I might as well. }
   Assign(ConfigFile, sPoolConfigFile);
   {$I-}
   Reset(ConfigFile);

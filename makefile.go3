@@ -46,13 +46,11 @@
 # Compiles a version with GDB debug information, Stack, Range and
 # I/O checks.
 
-# This will need some love from YOU to compile under *NIX.
 .SUFFIXES: .ppu .pas .exe
 
 PATHBIN = bin
 PATHLIB = lib
 
-# These will need some love from YOU to compile under *NIX.
 DOSPATHS = 1
 BINARYNAME = config.exe
 
@@ -118,4 +116,4 @@ cleanall: clean
 .PHONY: makezip
 makezip: $(BINDIR)$(BINARYNAME)
 	cp README.TXT bin
-	cd bin && zip -9 -X poolcfg.zip config.exe README.TXT && rm README.TXT
+	cd bin && zip -9 -X poolcfg.zip $(BINARYNAME) README.TXT && rm README.TXT

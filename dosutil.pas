@@ -17,21 +17,34 @@
 
 unit DosUtil;
 
+{$IFDEF MSDOS}
+{$DEFINE DOSPROGRAM}
+{$ENDIF}
+
+{$IFDEF GO32V2}
+{$DEFINE DOSPROGRAM}
+{$ENDIF}
+
 interface
 
 uses
   Dos;
 
+  {$IFDEF DOSPROGRAM}
 type
   TVideoCards = (vcNone, vcMda, vcCga, vcEgaMono, vcEgaColor, vcVgaMono,
     vcVgaColor, vcMcgaMono, vcMcgaColor, vcTandy);
+  {$ENDIF}
 
+{$IFDEF DOSPROGRAM}
 function DetectVideoCard: TVideoCards;
+{$ENDIF}
 function IsDirNameValid(const DirName: string; var InvalidPosition: longint;
   var InvalidChar: longint): boolean;
 
 implementation
 
+{$IFDEF DOSPROGRAM}
 function DetectVideoCard: TVideoCards;
 const
   bBiosVideoGetEgaInfo = $10;
@@ -94,6 +107,7 @@ begin
     end;
   end;
 end;
+{$ENDIF}
 
 function IsDirNameValid(const DirName: string; var InvalidPosition: longint;
   var InvalidChar: longint): boolean;

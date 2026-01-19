@@ -48,7 +48,7 @@ type
 implementation
 
 uses
-  Objects, Views, MainWnd, Dos, MsgBox {$IFDEF DOSPROGRAM}, DosUtil{$ENDIF};
+  Objects, Views, MainWnd, Dos, MsgBox, DosUtil;
 
 const
   sPoolConfigFile = 'POOL.CFG';

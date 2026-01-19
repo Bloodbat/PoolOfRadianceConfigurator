@@ -32,33 +32,87 @@
 #   cleanall       : implies clean; deletes the generated binary
 #                    as well.
 
+# Program generation can be controlled from the command line:
+# Available platforms: DOS, WINDOWS, NIX.
+
+# * The NIX platform stands in for both Linux and Unix.
+
+# make             :  attempts to detect the current architecture and
+#                  :  build a binary for it.
+# make DOS=1       :  tries to build a go32v2 protected mode binary.
+# make WINDOWS=1   :  tries to build a binary for 32-bit Windows.
+# make NIX=1       :  tries to build a binary for Linux or UNIX
+#                  :  (depends on the host platform for the compiler).
+
 # Generation of debug information can be controlled by the make file as well:
 
 # DEBUG=1    : compiles a version with debug information for GDB.
 # DEBUGALL=1 : implies DEBUG=1 and also includes Range, Stack and
 #              I/O checks.
 
-#Example
+#Examples
 # make DEBUG=1
-# Compiles a version with debug information for GDB.
+# Tries to detect the current architecture and compiles a version with debug
+# information for GDB for it.
 
-# make DEBUGALL=1
+# make WINDOWS=1 DEBUGALL=1
 # Compiles a version with GDB debug information, Stack, Range and
-# I/O checks.
+# I/O checks for Windows 32-bit.
 
-# This will need some love from YOU to compile under *NIX.
+# ---------------------------------------------------------------------------
+
+# Don't override command line!
+ifneq ($(or $(DOS),$(WINDOWS),$(NIX)),1)
+
+# Try to figure out host OS
+ISWINDOWS := $(findstring Windows,$(MAKE_HOST))
+ISDOS := $(findstring msdos,$(MAKE_HOST))
+
+ifeq ($(ISDOS), msdos)
+undefine WINDOWS
+DOS = 1
+undefine NIX
+else
+ifeq ($(ISWINDOWS), Windows)
+undefine DOS
+WINDOWS = 1
+undefine NIX
+else
+undefine DOS
+undefine WINDOWS
+NIX = 1
+endif
+endif
+
+endif
+
+ifdef DOS
 .SUFFIXES: .ppu .pas .exe
+DOSPATHS = 1
+BINARYNAME = config.exe
+else
+ifdef WINDOWS
+.SUFFIXES: .ppu .pas .exe
+DOSPATHS = 1
+BINARYNAME = config.exe
+else
+.SUFFIXES: .ppu .pas
+undefine DOSPATHS
+BINARYNAME = config
+endif
+endif
 
 PATHBIN = bin
 PATHLIB = lib
 
-# These will need some love from YOU to compile under *NIX.
-DOSPATHS = 1
-BINARYNAME = config.exe
-
 #Set environment variable EXTRAFLAGS with any options you'd like to add
 
-PFLAGS = -FE$(PATHBIN) -FU$(PATHLIB) -Fu$(PATHLIB) -FcCP437 -Cp80386 -Mfpc -Sgi
+PFLAGS = -FE$(PATHBIN) -FU$(PATHLIB) -Fu$(PATHLIB) -FcCP437 -Mfpc -Sgi
+
+ifdef DOS
+PFLAGS += -Cp80386
+endif
+
 COMPILEROPTS = -CPPACKENUM=1 -Si -Rintel
 
 BINDIR = $(addsuffix /, $(PATHBIN))
@@ -93,7 +147,7 @@ UNITEXTENSION = ppu
 
 PFLAGS += $(COMPILEROPTS)
 
-$(BINDIR)$(BINARYNAME): config.pas $(LIBDIR)progmain.$(UNITEXTENSION) | $(PATHBIN)
+$(BINDIR)$(BINARYNAME): config.pas $(LIBDIR)progmain.$(UNITEXTENSION) | $(PATHBIN)	
 	$(PC) $(PFLAGS) $(EXTRAFLAGS) -o$(BINARYNAME) config.pas
 	$(copydata)
 
@@ -118,4 +172,4 @@ cleanall: clean
 .PHONY: makezip
 makezip: $(BINDIR)$(BINARYNAME)
 	cp README.TXT bin
-	cd bin && zip -9 -X poolcfg.zip config.exe README.TXT && rm README.TXT
+	cd $(PATHBIN) && zip -9 -X poolcfg.zip $(BINARYNAME) README.TXT && rm README.TXT

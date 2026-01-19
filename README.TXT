@@ -67,8 +67,8 @@ Several options for compiling exist:
   co-processor (again, a Free Pascal compiler limitation).
 
 - The program can also be compiled using Turbo Pascal 7 or Borland
-  Pascal 7 without changes (Turbo Vision 2 is required, Turbo Pascal 7 and
-  Borland Pascal 7 include it)
+  Pascal 7 without changes (Turbo Vision 2 is required, Turbo Pascal 7
+  and Borland Pascal 7 include it)
 
 As you can see, there are options aplenty.
 
@@ -95,6 +95,6 @@ As you can see, there are options aplenty.
     Pascal one.
 
  - A Lazarus project is also included, it contains convenient build
-   modes for compiling DOS targets (real and protected mode); editing the
-   sources, and debugging the non-DOS exclusive parts of the program
+   modes for compiling DOS targets (real and protected mode); editing
+   the sources, and debugging the non-DOS exclusive parts of the program
    easily under Windows or Linux.

@@ -43,6 +43,10 @@ PATHLIB = lib
 DOSPATHS = 1
 BINARYNAME = config.exe
 
+ifdef LINUX
+undef DOSPATHS
+endif
+
 #Set environment variable EXTRAFLAGS with any options you'd like to add
 
 PFLAGS = -FE$(PATHBIN) -FU$(PATHLIB) -Fu$(PATHLIB) -FcCP437 -Tmsdos -Pi8086 -Cp8086 -Mfpc -Sgi -CX -O3 -Xs -XX -vewnhibq -WmLarge
@@ -51,9 +55,7 @@ COMPILEROPTS = -CPPACKENUM=1 -Si -Rintel
 BINDIR = $(addsuffix /, $(PATHBIN))
 LIBDIR = $(addsuffix /, $(PATHLIB))
 
-fixpaths = $(subst /,/,$1)
 ifdef DOSPATHS
-fixpaths = $(subst /,\,$1)
 EXEEXTENSION = .exe
 endif
 

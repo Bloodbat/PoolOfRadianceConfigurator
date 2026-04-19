@@ -18,6 +18,8 @@ This simple program offers a mouse or keyboard driven TUI to create or edit the 
 
 # Usage
 
+**The pre-compiled executables are DOS-only at the moment!**
+
 Just drop config.exe into your Pool of Radiance directory and run it.
 
 - If an existing configuration file is found, it is loaded and game options can be edited to taste.
@@ -44,18 +46,24 @@ Several options for compiling exist:
 
 As you can see, there are options aplenty.
 
-- Convenient batch files and makefiles are included:
+- Convenient batch files, script files and makefiles are included:
 
-  - makefprm.bat calls GNU make with makefile.i86 and produces a cross-compiled real mode executable using the Windows DOS real mode cross-compiler.
+  - makefprm.bat calls GNU make with makefile.i86 and produces a cross-compiled real mode executable using the Windows cross-compiler for real mode DOS.
 
-  - makego32.bat calls GNU make with makefile.go3 and produces a protected mode executable from the DOS Free Pascal compiler or a Windows cross-compiler.
- 
+  - makefprm.sh calls GNU make with makefile.i86 and produces a cross-compiled real mode executable using the Linux cross-compiler for real mode DOS.
+
+  - makego32.bat calls GNU make with makefile.go3 and produces a DOS protected mode executable using the DOS Free Pascal compiler or a Windows cross-compiler.
+
+  - makego32.sh calls GNU make with makefile.go3 and produces a DOS protected mode executable using a Linux GO32V2 cross-compiler.
+
   - makeborl.bat calls Borland make with makefile.mak and produces a real mode executable using the Borland Pascal command line compiler.
- 
-  - The batch files are a convenience: the make files can be used by calling make directly from, say, Linux.
 
-  - Linux shell scripts for cross-compiling will be added later.
- 
+  - The batch files and scripts are a convenience: the make files can be used by calling
+
+    `make -f`
+
+    directly with the appropriate file name.
+
   - Take a look in the make files for some additional options such as using the Turbo Pascal command line compiler instead of the Borland Pascal one.
- 
+
  - A Lazarus project is also included, it contains convenient build modes for compiling DOS targets (real and protected mode); editing the sources, and debugging the non-DOS exclusive parts of the program easily under Windows or Linux.

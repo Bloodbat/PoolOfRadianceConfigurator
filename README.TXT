@@ -1,6 +1,6 @@
                      Pool of Radiance Configurator
 
-                              Version 1.1
+                              Version 1.2
 
 A configuration editor for the DOS version of Pool of Radiance.
 
@@ -29,8 +29,6 @@ This simple program offers a mouse or keyboard driven TUI to create or
 edit the Pool of Radiance configuration file.
 
                                  Usage
-
-The pre-compiled executables are DOS-only at the moment!
 
 Just drop config.exe into your Pool of Radiance directory and run it.
 
@@ -94,14 +92,34 @@ As you can see, there are options aplenty.
   - makeborl.bat calls Borland make with makefile.mak and produces a
     real mode executable using the Borland Pascal command line compiler.
 
-  - The batch files and script are a convenience: the make files can
-    be used by calling "make -f" directly with the appropriate file name.
+  - The batch files and scripts for building DOS executables are a
+    convenience: the make files can be used by calling "make -f"
+    directly with the appropriate file name.
+
+  - makew32.bat calls lazbuild to build config.lpi with the
+    '--bm="Release Win32"' parameter to produce an executable file for
+	32-bit Windows.
+
+  - makew64.bat calls lazbuild to build config.lpi with the
+    '--bm="Release Win64"' parameter to produce an executable file for
+	64-bit Windows.
+
+  - makel64.sh calls lazbuild to build config.lpi with the
+    '--bm="Release Linux x64"' parameter to produce an executable file for
+	64-bit Linux.
+
+  - makel32.sh calls lazbuild to build config.lpi with the
+    '--bm="Release Linux x32"' parameter to produce an executable file for
+	32-bit Linux.
+
+  - lazbuild can be called manually using the above parameters.
 
   - Take a look in the make files for some additional options such as
     using the Turbo Pascal command line compiler instead of the Borland
     Pascal one.
 
- - A Lazarus project is also included, it contains convenient build
-   modes for compiling DOS targets (real and protected mode); editing
-   the sources, and debugging the non-DOS exclusive parts of the program
+- A Lazarus project is also included, it contains convenient build
+   modes for compiling DOS targets (real and protected mode), Windows
+   and Linux targets for 32 or 64-bit architectures; editing the sources,
+   and debugging the non-DOS exclusive parts of the program
    easily under Windows or Linux.

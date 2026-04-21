@@ -23,6 +23,7 @@ uses
   dpmiexcp,
   {$ENDIF}
   {$ENDIF}
+  FPUsrScr,
   ProgMain;
 
 var
@@ -32,9 +33,19 @@ begin
   {$IFDEF GO32V2}
   djgpp_set_ctrl_c(False);
   {$ENDIF}
+  {$IFDEF FPC}
+  {$IFNDEF MSDOS}
+  InitUserScreen;
+  {$ENDIF}
+  {$ENDIF}
   PoolRadConfig.Init;
   PoolRadConfig.Run;
   PoolRadConfig.Done;
+  {$IFDEF FPC}
+  {$IFNDEF MSDOS}
+  DoneUserScreen;
+  {$ENDIF}
+  {$ENDIF}
   {$IFDEF GO32V2}
   djgpp_set_ctrl_c(True);
   {$ENDIF}
